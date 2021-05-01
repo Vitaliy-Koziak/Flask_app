@@ -25,7 +25,7 @@
         padding: 15px 30px;
         margin: 10px auto;
         border-radius: 10px;
-        box-shadow: 0 0 40px 40px #F137A6 inset, 0 0 0 0 #F137A6;
+        box-shadow: 0 0 40px 40px #f1db37 inset, 0 0 0 0 #f1bf37;
         font-family: 'Montserrat', sans-serif;
         font-weight: bold;
         letter-spacing: 2px;
@@ -35,8 +35,8 @@
         border: none;
       }
       .glow-button:hover {
-        box-shadow: 0 0 10px 0 #F137A6 inset, 0 0 10px 4px #F137A6;
-        color: #F137A6;
+        box-shadow: 0 0 10px 0 #f1a037 inset, 0 0 10px 4px #f1a037;
+        color: #f1a037;
       }
     </style>
 
@@ -57,6 +57,8 @@
           {%if user.is_authenticated%}}
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="employees" href="/employees">Employees</a>
+
           {%else%}
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>

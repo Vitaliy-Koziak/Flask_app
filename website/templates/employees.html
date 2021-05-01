@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}All Employees{% endblock %}
+{% block content%}
+<div class="container mt-5">
+    <h1 align="center">All Employees </h1>
+    {% for employee in employees %}
+     <div class="alert-info">
+         <h2 >{{employee.first_name}}</h2>
+         <p><b>Email:</b> {{employee.email}}</p>
+         <p><b>Department: </b>{{employee.department}}</p>
+         <a href="/employees/{{employee.id}}"  class="glow-button" >More info</a>
+     </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

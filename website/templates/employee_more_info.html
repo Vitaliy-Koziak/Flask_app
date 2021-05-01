@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{employee.first_name}}{% endblock %}
+{% block content%}
+<div class="container mt-5">
+    <h1 align="center">{{employee.first_name}} </h1>
+     <div class="alert-info">
+         <p><b>Email: {{employee.email}}</b></p>
+         <p><b>Department: {{employee.department}}</b></p>
+         <p><b>Date: {{employee.date}}</b></p>
+         <p><b>Salary: {{employee.salary}}</b></p>
+
+     </div>
+
+</div>
+{% endblock %}
