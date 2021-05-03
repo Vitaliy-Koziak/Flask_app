@@ -12,9 +12,11 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(40),unique=True)
     password = db.Column(db.String(30))
     first_name = db.Column(db.String(150))
-    date = db.Column(db.String(20))
+    date = db.Column(db.String(10))
     department = db.Column(db.String(50))
     salary = db.Column(db.Integer)
+
+
 
 class UserSchema(ma.Schema):
     class Meta:

@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,login_required,logout_user,current_user
 auth = Blueprint('auth',__name__)
-departments = ['Production','Research and Development','Purchasing','Marketing','Human Resource Management','Accounting and Finance']
 @auth.route('/login',methods = ['GET','POST'])
 def login():
     if request.method == "POST":
@@ -39,27 +38,28 @@ def sign_up():
         date = request.form.get('date')
         department = request.form.get('department')
         user = User.query.filter_by(email=email).first()
-        print(date)
-        print(department)
+        em = email.split("@")
         if user:
             flash("Email already exist!",category='error')
+
         elif len(email) < 6:
             flash('Email length must be more than 5 characters! ',category='error')
+        elif em[1] != 'epam.com':
+            flash('Email wronf format! ', category='error')
         elif len(first_name) < 3 :
             flash('Name length must be more than 3 characters! ',category='error')
         elif len(password1) < 5:
             flash('Password length must be more than 4 characters! ',category='error')
         elif password1 != password2:
             flash('Passwords do not match',category='error')
-        elif department not in departments:
-            flash('There is not such department',category='error')
+
         else:
             new_user = User(email=email,
                             first_name=first_name,
                             password=password1,
                             date=date,
                             department=department,
-                            salary = set_salary(department))
+                            salary = set_salary())
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
@@ -68,14 +68,6 @@ def sign_up():
 
     return render_template('sign_up.html',user=current_user)
 
-def set_salary(department : str)->int:
+def set_salary()->int:
     base_salary = 500
-    salaries = {
-        'Production': base_salary * random.uniform(1.2,1.7),
-        'Research and Development': base_salary * random.uniform(1.1,1.5),
-        'Purchasing': base_salary * random.uniform(1.1,1.4),
-        'Marketing': base_salary * random.uniform(0.9,1.5),
-        'Human Resource Management': base_salary * random.uniform(1.1,1.5),
-        'Accounting and Finance': base_salary * random.uniform(1.1,1.5)
-    }
-    return int(salaries[department])
+    return int(base_salary * random.uniform(0.7,10))

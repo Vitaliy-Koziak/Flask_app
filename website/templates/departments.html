@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}All Departments{% endblock %}
+{% block content%}
+
+<div style="position: relative;"  class="container mt-5" >
+    <h1 style="margin-bottom: 50px;" align="center">All Departments </h1>
+
+
+    {%if departments | length >0%}
+        {% for department in departments %}
+         <div class="alert-info" style="padding: 15px; margin-bottom: 30px;">
+             <h2 >{{department}}</h2>
+             <a href="/departments/{{department}}"  class="glow-button" >More info</a>
+
+
+         </div>
+
+        {% endfor %}
+    {%else%}
+    <p>No one department yet</p>
+    {%endif%}
+</div>
+    <a href="/sign-up"  class="glow-button" >Add new department</a>
+
+
+
+{% endblock %}

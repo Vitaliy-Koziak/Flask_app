@@ -1,16 +1,54 @@
 {% extends "base.html" %}
 {% block title %}All Employees{% endblock %}
 {% block content%}
-<div class="container mt-5">
-    <h1 align="center">All Employees </h1>
-    {% for employee in employees %}
-     <div class="alert-info">
-         <h2 >{{employee.first_name}}</h2>
-         <p><b>Email:</b> {{employee.email}}</p>
-         <p><b>Department: </b>{{employee.department}}</p>
-         <a href="/employees/{{employee.id}}"  class="glow-button" >More info</a>
-     </div>
-    {% endfor %}
 
+<div style="position: relative;"  class="container mt-5" >
+    <h1 style="margin-bottom: 350px;" align="center">All Employees </h1>
+    <div style="position: absolute; top:80px; left:0; right:0;">
+
+        <form  method="GET">
+    <div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter full name" name="surn" >
+    </div>
+    <button style="margin: 9px auto 10px !important; display: block; min-width: 300px;" class="btn-success" type="submit">Search by full name</button>
+        </form>
+
+        <form  method="GET">
+    <div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter date" name="q" >
+    </div>
+    <button style="margin: 9px auto 10px !important; display: block; min-width: 300px;" class="btn-success" type="submit">Search by date</button>
+        </form>
+
+        <form method="GET">
+    <div >
+        <input style="margin: 0 auto 5px !important; display: block;" class="form-control mr-sm-2" type="search" placeholder="Enter start date" name="dat_1" >
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter end date" name="dat_2" >
+
+    </div>
+    <button style="margin: 9px auto 10px !important; display: block; min-width: 300px;" class="btn-success" type="submit">Search by period</button>
+    </form>
+        </div>
+
+
+
+
+    {%if employees | length >0%}
+        {% for employee in employees %}
+         <div class="alert-info" style="padding: 15px; margin-bottom: 30px;">
+             <h2 >{{employee.first_name}}</h2>
+             <p><b>Email:</b> {{employee.email}}</p>
+             <p><b>Department: </b>{{employee.department}}</p>
+             <a href="/employees/{{employee.id}}"  class="glow-button" >More info</a>
+         </div>
+
+        {% endfor %}
+    {%else%}
+    <p>No one employee yet</p>
+    {%endif%}
 </div>
+    <a href="/sign-up"  class="glow-button" >Add new employee</a>
+
+
+
 {% endblock %}
