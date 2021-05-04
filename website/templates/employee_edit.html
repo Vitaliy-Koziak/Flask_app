@@ -2,18 +2,7 @@
 content %}
 <form method="POST">
   <h1 style="margin: 30px 0;" align="center">Enter new  information and press submit</h1>
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input
-            value="{{user.email}}"
-      type="email"
-      class="form-control"
-      id="email"
-      name="email"
-      placeholder="Enter email"
-    />
 
-  </div>
   <div class="form-group">
     <label for="firstName">Name and surname</label>
     <input
@@ -36,6 +25,18 @@ content %}
       name="department"
       placeholder="Production/Research and Development/Purchasing/Marketing/Human Resource Management/Accounting and Finance"
     />
+  </div>
+  <div class="form-group">
+    <label for="salary">Salary</label>
+    <input
+            value="{{user.salary}}"
+      type="salary"
+      class="form-control"
+      id="salary"
+      name="salary"
+      placeholder="Enter new salary"
+    />
+
   </div>
   <br />
   <button type="submit" class="glow-button">Save</button>

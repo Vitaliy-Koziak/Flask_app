@@ -16,6 +16,8 @@ class User(db.Model,UserMixin):
     department = db.Column(db.String(50))
     salary = db.Column(db.Integer)
 
+    def __repr__(self):
+        return f"\nid : {self.id}\nname : {self.first_name}\nemail : {self.email}\ndate : {self.date}department : {self.department}\n"
 
 
 class UserSchema(ma.Schema):

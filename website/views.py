@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, flash
+from flask import Blueprint, render_template, redirect, request, flash, send_file
 from flask_login import login_required,current_user
 from . import db
 
@@ -33,7 +33,14 @@ def employees():
         return render_template("employees_by_date.html",user=current_user,employees=employees)
 
     else:
+        f = open('alll_info.txt', 'w')
+
+
         employees = User.query.order_by(User.email).all()
+
+        for employee in employees:
+            f.write(str(employee))
+        f.close()
         return render_template("employees.html",user=current_user,employees=employees)
 @views.route('/departments',methods = {'POST','GET'})
 @login_required
@@ -85,23 +92,21 @@ def employee_edit(id):
     employee = User.query.get(id)
 
     if request.method == 'POST':
-        if employee.email == request.form.get('email'):
-            employee.email = request.form.get('email')
-            employee.first_name = request.form.get('firstName')
-            employee.department = request.form.get('department')
+        employee.first_name = request.form.get('firstName')
+        employee.department = request.form.get('department')
+        employee.salary= request.form.get('salary')
 
-            try:
-                db.session.commit()
-                return redirect('/employees')
-            except:
-                return "Some error"
-        else:
-            user = User.query.filter_by(email=request.form.get('email')).first()
-            if user:
-                flash('Email already exist',category='error')
-                return render_template('employee_edit.html',user=employee)
-
-
+        try:
+            db.session.commit()
+            return redirect('/employees')
+        except:
+            return "Some error"
     else:
         return render_template('employee_edit.html',user=employee)
+@views.route('/download')
+@login_required
+def download_file():
+    p = 'alll_info.txt'
+    return send_file(p,as_attachment=True)
+
 

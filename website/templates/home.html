@@ -1,6 +1,34 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content%}
+<div style="position: relative">
+    <h1 style="text-align: center; margin: 10px 0;">Epam Home</h1>
+    <a style="position: absolute; top: 0; right: 0; display: block; padding: 5px; background-color: aqua; border-radius: 5px; color: black" href="{{url_for('views.download_file')}}">Download all empoloyees</a>
 
-</form>
+</div>
+<div style="display: flex;">
+
+<div>
+
+    <h3>About</h3>
+
+    <p>    <img style="float: right; margin: 10px 0 10px 10px;" width="500px" src="https://ua-rating.com/wp-content/uploads/2019/09/snimok-ekrana-2019-09-25-v-15.38.53.jpg">
+EPAM Systems, Inc. is an American company that specializes in product development,
+    digital platform engineering, and digital and product design. The world's largest manufacturer
+    of custom software, consulting specialist, resident of the Belarus High Technologies Park.
+    The company's headquarters is located in Newtown, Pennsylvania, and its branches are represented
+    in more than 30 countries of the world.
+</p>
+    <h3>History</h3>
+    <p>In 1993, Arkadiy Dobkin and Leo Lozner founded EPAM, a global software engineering services company, in New Jersey, USA and Minsk, Belarus.
+In 2002, EPAM was ranked publicly for the first time as a fast-growing company by Deloitte & Touche.EPAM became the first company to represent Belarus on the New York Stock Exchange when it went public in 2012
+In 2004, EPAM acquired Fathom Technology, a software development services company based in Budapest, Hungary, expanding its offshore services beyond North America.[8] A couple years later, EPAM secured an equity investment from Siguler Guff to fund its competitive growth plans.
+In 2006, EPAM acquired VDI, a software development services company with delivery centers in Russia, which expanded the company’s presence in the CIS region.[10] That year, EPAM CEO Arkadiy Dobkin was named one of the Top 25 Most Influential Consultants of the Year by Consulting Magazine.
+In 2019, EPAM joined the Blockchain in Transport Alliance (BiTA).[18] That year, the company launched EPAM Continuum, its service for business, experience and technology consulting.
+The company also launched EPAM SolutionsHub, a catalogue of its software products, accelerators and open source platforms. As part of its SolutionsHub launch, EPAM also released the Open Source Contributor Index (OSCI), a tool that ranks the top open source contributors by commercial organization.
+    </p>
+
+</div>
+
+    </div>
 {%endblock%}

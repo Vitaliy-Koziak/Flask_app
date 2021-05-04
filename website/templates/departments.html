@@ -8,9 +8,9 @@
 
     {%if departments | length >0%}
         {% for department in departments %}
-         <div class="alert-info" style="padding: 15px; margin-bottom: 30px;">
-             <h2 >{{department}}</h2>
-             <a href="/departments/{{department}}"  class="glow-button" >More info</a>
+         <div class="alert-info" style="position: relative; align-items: center; justify-content: space-between;  padding: 15px; display: flex; margin-bottom: 30px;">
+             <h2 style="display: block;">{{department}}</h2>
+             <a style="position: absolute; right: 15px; display: block;" href="/departments/{{department}}"  class="glow-button" >More info</a>
 
 
          </div>
