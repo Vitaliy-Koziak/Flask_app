@@ -1,3 +1,5 @@
+import csv
+
 from flask import Blueprint, render_template, redirect, request, flash, send_file
 from flask_login import login_required,current_user
 from . import db
@@ -33,14 +35,18 @@ def employees():
         return render_template("employees_by_date.html",user=current_user,employees=employees)
 
     else:
-        f = open('alll_info.txt', 'w')
-
 
         employees = User.query.order_by(User.email).all()
+        temp = []
+        employees_csv= []
+        for item in employees:
+            temp.append((str(item)))
+        for item in temp:
+            employees_csv.append(item.split(", "))
+        with open("D:\\Python core\\Flask_app\\info.csv", "w") as file:
+            writer = csv.writer(file)
+            writer.writerows(employees_csv)
 
-        for employee in employees:
-            f.write(str(employee))
-        f.close()
         return render_template("employees.html",user=current_user,employees=employees)
 @views.route('/departments',methods = {'POST','GET'})
 @login_required
@@ -106,7 +112,7 @@ def employee_edit(id):
 @views.route('/download')
 @login_required
 def download_file():
-    p = 'alll_info.txt'
+    p = 'D:\\Python core\\Flask_app\\info.csv'
     return send_file(p,as_attachment=True)
 
 
