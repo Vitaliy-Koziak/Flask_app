@@ -1,6 +1,8 @@
 import random
 from flask import Blueprint, render_template, request,flash,redirect,url_for
-from .models import User
+from sqlalchemy.orm import session
+
+from .models import User,Department
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,login_required,logout_user,current_user
@@ -36,7 +38,6 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
         date = request.form.get('date')
-        department = request.form.get('department')
         user = User.query.filter_by(email=email).first()
         em = email.split("@")
         if user:
@@ -52,13 +53,13 @@ def sign_up():
             flash('Password length must be more than 4 characters! ',category='error')
         elif password1 != password2:
             flash('Passwords do not match',category='error')
-
         else:
+
             new_user = User(email=email,
                             first_name=first_name,
                             password=password1,
                             date=date,
-                            department=department,
+                            department_id = random.randint(1,10),
                             salary = set_salary())
             db.session.add(new_user)
             db.session.commit()

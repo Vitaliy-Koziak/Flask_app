@@ -3,8 +3,8 @@
 {% block content%}
 
 <div style="position: relative;"  class="container mt-5" >
-    <h1 style="margin-bottom: 350px;" align="center">All Employees </h1>
-    <div style="position: absolute; top:80px; left:0; right:0;">
+    <h1 style="margin-bottom: 350px;" align="center">--- </h1>
+    <div style="position: absolute; top:0px; left:0; right:0;">
 
         <form  method="GET">
     <div>
@@ -28,6 +28,15 @@
     </div>
     <button style="background-color: #f1db37; padding: 5px; border: none;font-weight: 500; border-radius: 5px; margin: 9px auto 10px !important; display: block; min-width: 200px;" class="btn-success" type="submit">Search by period</button>
     </form>
+
+        <form  method="GET">
+    <div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Sort by name/date" name="sort" >
+    </div>
+    <button style="background-color: #f1db37; padding: 5px; border: none;font-weight: 500; border-radius: 5px; margin: 9px auto 10px !important; display: block; min-width: 200px;" class="btn-success" type="submit">Sort</button>
+        </form>
+
+
         </div>
 
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="database2" uuid="f540512c-45a2-4a96-a30b-8d14eee38e3c">
+    <data-source source="LOCAL" name="database" uuid="3c06dea5-ee3c-4716-8a14-a3c3e57fc7f4">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Python core\Flask_app\website\database2.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\Python core\Flask_app\website\database.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

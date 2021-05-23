@@ -1,13 +1,12 @@
 import csv
-
-from flask import Blueprint, render_template, redirect, request, flash, send_file
+from flask import Blueprint, render_template, redirect, request, send_file
 from flask_login import login_required,current_user
+from sqlalchemy import select
 from . import db
-
-
-from website.models import User
+from website.models import User,Department
 
 views = Blueprint('views',__name__)
+
 
 @views.route('/')
 @login_required
@@ -22,6 +21,7 @@ def employees():
     q = request.args.get('q')
     dat_1 = request.args.get('dat_1')
     dat_2 = request.args.get('dat_2')
+    sort=request.args.get('sort')
     if surn:
         employees = User.query.filter(User.first_name == surn).all()
         return render_template("employees_by_date.html", user=current_user, employees=employees)
@@ -33,9 +33,14 @@ def employees():
         employees_2 = User.query.filter( User.date<=dat_2 ).all()
         employees = set(employees_1) & set(employees_2)
         return render_template("employees_by_date.html",user=current_user,employees=employees)
-
+    elif sort:
+        if sort == 'name':
+            employees = User.query.order_by(User.first_name).all()
+            return render_template("employees.html", user=current_user, employees=employees)
+        else:
+            employees = User.query.order_by(User.date).all()
+            return render_template("employees.html", user=current_user, employees=employees)
     else:
-
         employees = User.query.order_by(User.email).all()
         temp = []
         employees_csv= []
@@ -48,31 +53,32 @@ def employees():
             writer.writerows(employees_csv)
 
         return render_template("employees.html",user=current_user,employees=employees)
+
+
 @views.route('/departments',methods = {'POST','GET'})
 @login_required
 def departments():
-    departments = []
-    employees = User.query.order_by(User.email).all()
-    for employee in employees:
-        departments.append(employee.department)
+    departments = Department.query.order_by(Department.id).all()
 
+    return render_template("departments.html",user=current_user,departments=departments)
 
-    return render_template("departments.html",user=current_user,departments=set(departments))
 
 @views.route('/departments/<string:department>')
 @login_required
 def  department_more_info(department):
-    employees = User.query.filter(User.department == department).all()
+    department = Department.query.filter(Department.name == department).first()
+
+    employees = User.query.filter(User.department_id == department.id).all()
     avarege_salary = 0
     counter = 0
-    for employee in employees:
-        avarege_salary+=employee.salary
-        counter+=1
-    avarege_salary = round(avarege_salary/counter,3)
-
-    return render_template("department_more_info.html",user=current_user,department=department,employees=employees,aver_sal=avarege_salary)
-
-
+    if employees:
+        for employee in employees:
+            avarege_salary+=employee.salary
+            counter+=1
+        avarege_salary = round(avarege_salary/counter,3)
+    else:
+        avarege_salary = 0
+    return render_template("department_more_info.html",department = department,user=current_user,employees=employees,aver_sal=avarege_salary)
 
 
 @views.route('/employees/<int:id>')
@@ -80,6 +86,7 @@ def  department_more_info(department):
 def employee_more_info(id):
     employee = User.query.get(id)
     return render_template("employee_more_info.html",user=current_user,employee=employee)
+
 
 @views.route('/employees/<int:id>/delete')
 @login_required
@@ -92,14 +99,16 @@ def employee_delete(id):
     except:
         return "Error ocuired"
 
+
 @views.route('/employees/<int:id>/edit',methods= {'POST','GET'})
 @login_required
+
 def employee_edit(id):
     employee = User.query.get(id)
 
     if request.method == 'POST':
         employee.first_name = request.form.get('firstName')
-        employee.department = request.form.get('department')
+        employee.date = request.form.get('date')
         employee.salary= request.form.get('salary')
 
         try:
@@ -109,6 +118,8 @@ def employee_edit(id):
             return "Some error"
     else:
         return render_template('employee_edit.html',user=employee)
+
+
 @views.route('/download')
 @login_required
 def download_file():
