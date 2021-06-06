@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_marshmallow import Marshmallow
 from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate,MigrateCommand
 app = Flask(__name__)
 ma = Marshmallow(app)
 
