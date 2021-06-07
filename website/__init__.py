@@ -17,17 +17,14 @@ DB_NAME = "database.db"
 #Base.query = session.query_property()
 
 def create_app():
+
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'vitaliy'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-
     db.init_app(app)
-    #app.config['SQLALCHEMY_DATABASE_URI'] = True
     api = Api(app)
-
-
 
     from .views import views
     from .auth import auth
@@ -40,8 +37,8 @@ def create_app():
     login_manager.init_app(app)
 
 
-    #from website.rest import UsersResourseList
-    #api.add_resource(UsersResourseList,"/users","/users/<int:id>")
+    from website.rest import UsersResourseList
+    api.add_resource(UsersResourseList,"/users","/users/<int:id>")
 
 
     @login_manager.user_loader

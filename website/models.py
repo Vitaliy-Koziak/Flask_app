@@ -7,8 +7,6 @@ app = Flask(__name__)
 ma = Marshmallow(app)
 
 
-
-
 class User(db.Model,UserMixin):
     id = db.Column(db.Integer,primary_key=True,unique=True)
     email = db.Column(db.String(40),unique=True)

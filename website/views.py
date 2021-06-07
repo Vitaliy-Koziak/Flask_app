@@ -11,12 +11,14 @@ views = Blueprint('views',__name__)
 @views.route('/')
 @login_required
 def home():
+    """render home.html template"""
     return render_template("home.html",user=current_user)
 
 
 @views.route('/employees',methods = {'POST','GET'})
 @login_required
 def employees():
+
     surn = request.args.get('surn')
     q = request.args.get('q')
     dat_1 = request.args.get('dat_1')
@@ -58,6 +60,10 @@ def employees():
 @views.route('/departments',methods = {'POST','GET'})
 @login_required
 def departments():
+    """
+        Receive all departments from a database and render departments
+        template transferring departments there
+    """
     departments = Department.query.order_by(Department.id).all()
 
     return render_template("departments.html",user=current_user,departments=departments)
@@ -66,8 +72,12 @@ def departments():
 @views.route('/departments/<string:department>')
 @login_required
 def  department_more_info(department):
+    """
+        Receive  department by  name  from a database, count avarage salary for each
+        department for this I take the salary for each department  of each worker and divide by
+        the number of workers in this department, than I render department_more_info template
+    """
     department = Department.query.filter(Department.name == department).first()
-
     employees = User.query.filter(User.department_id == department.id).all()
     avarege_salary = 0
     counter = 0
@@ -84,6 +94,7 @@ def  department_more_info(department):
 @views.route('/employees/<int:id>')
 @login_required
 def employee_more_info(id):
+    """Receive  employee by id from database and  render employee_more_info template """
     employee = User.query.get(id)
     return render_template("employee_more_info.html",user=current_user,employee=employee)
 
@@ -91,6 +102,11 @@ def employee_more_info(id):
 @views.route('/employees/<int:id>/delete')
 @login_required
 def employee_delete(id):
+
+    """
+        Receive  employee by  id  from a database, delete this employee,save changes in database,
+        and make redirect on employees page
+    """
     employee = User.query.get_or_404(id)
     try:
         db.session.delete(employee)
@@ -102,10 +118,12 @@ def employee_delete(id):
 
 @views.route('/employees/<int:id>/edit',methods= {'POST','GET'})
 @login_required
-
 def employee_edit(id):
+    """
+        Receive  employee by  id  from a database, edit fields of this employee,save changes in database,
+        and make redirect on employees page
+    """
     employee = User.query.get(id)
-
     if request.method == 'POST':
         employee.first_name = request.form.get('firstName')
         employee.date = request.form.get('date')
