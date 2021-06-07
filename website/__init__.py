@@ -1,45 +1,32 @@
-from flask import Flask, redirect, url_for
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
 from os import path
 from flask_login import LoginManager
-from flask_restful import Resource, Api
-from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.ext.declarative import declarative_base
-
+from flask_restful import Api
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
-#engine = create_engine('sqlite:///database')
-#session = scoped_session(sessionmaker(autocommit = False,autoflush = False,bind = engine))
-#Base = declarative_base()
-#Base.query = session.query_property()
+
 
 def create_app():
-
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'vitaliy'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
     db.init_app(app)
     api = Api(app)
 
     from .views import views
     from .auth import auth
-    app.register_blueprint(views,url_prefix = '/')
-    app.register_blueprint(auth,url_prefix = '/')
-    from website.models import User,Department
+    app.register_blueprint(views, url_prefix = '/')
+    app.register_blueprint(auth, url_prefix = '/')
+    from website.models import User, Department
     create_database(app)
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-
-
     from website.rest import UsersResourseList
-    api.add_resource(UsersResourseList,"/users","/users/<int:id>")
-
+    api.add_resource(UsersResourseList, "/users", "/users/<int:id>")
 
     @login_manager.user_loader
     def load_user(id):
@@ -49,8 +36,4 @@ def create_app():
 
 def create_database(app):
     if not path.exists('website/'+DB_NAME):
-
         db.create_all(app=app)
-
-
-

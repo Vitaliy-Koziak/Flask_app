@@ -1,15 +1,15 @@
-from flask import jsonify, request, redirect, url_for
-from flask_restful import Resource,Api
+from flask import request
+from flask_restful import Resource
 from .models import *
 
 
 users_schema = UserSchema(many=True)
 user_schema = UserSchema()
-class UsersResourseList(Resource):
+
+
+class UsersResourceList(Resource):
     def post(self):
-
         user_json = request.json
-
         if not user_json:
             return {'message': "Wrong date"}, 400
         try:
@@ -27,7 +27,7 @@ class UsersResourseList(Resource):
             return {'message': 'Wrong date'}, 400
         return {'message': "created successfully"}, 201
 
-    def get(self, id = None):
+    def get(self, id=None):
         if not id:
             users = db.session.query(User).all()
             users = users_schema.dump(users)
@@ -38,9 +38,3 @@ class UsersResourseList(Resource):
         if not user:
             return 'not one yet', 404
         return user, 200
-
-
-
-
-
-

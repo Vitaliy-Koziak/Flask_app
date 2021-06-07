@@ -2,12 +2,13 @@
 from website import create_app
 
 app = create_app()
+
+
 class TestViews:
 
     def setup(self):
         app.testing = True
         self.client = app.test_client()
-
 
     def test_home(self):
         response = self.client.get('/')
