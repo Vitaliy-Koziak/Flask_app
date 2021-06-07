@@ -2,15 +2,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_marshmallow import Marshmallow
-from flask_script import Manager
-from flask_migrate import Migrate,MigrateCommand
+from . import db
 app = Flask(__name__)
 ma = Marshmallow(app)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
+
+
 
 class User(db.Model,UserMixin):
     id = db.Column(db.Integer,primary_key=True,unique=True)
@@ -44,5 +41,4 @@ class UserSchema(ma.Schema):
             "collection": ma.URLFor("users"),
         }
     )
-if __name__ == '__main__':
-    manager.run()
+
