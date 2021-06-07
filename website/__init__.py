@@ -25,8 +25,8 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-    from website.rest import UsersResourseList
-    api.add_resource(UsersResourseList, "/users", "/users/<int:id>")
+    from website.rest import UsersResourceList
+    api.add_resource(UsersResourceList, "/users", "/users/<int:id>")
 
     @login_manager.user_loader
     def load_user(id):
