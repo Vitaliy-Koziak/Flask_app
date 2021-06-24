@@ -8,15 +8,15 @@ from website.models import User, Department
 views = Blueprint('views', __name__)
 
 
-@views.route('/')
 @login_required
+@views.route('/')
 def home():
     """render home.html template"""
     return render_template("home.html", user=current_user)
 
 
-@views.route('/employees', methods = {'POST', 'GET'})
 @login_required
+@views.route('/employees', methods = {'POST', 'GET'})
 def employees():
 
     surn = request.args.get('surn')
@@ -57,8 +57,8 @@ def employees():
         return render_template("employees.html", user=current_user, employees=employees)
 
 
-@views.route('/departments', methods = {'POST', 'GET'})
 @login_required
+@views.route('/departments', methods = {'POST', 'GET'})
 def departments():
     """
         Receive all departments from a database and render departments
@@ -69,8 +69,8 @@ def departments():
     return render_template("departments.html", user=current_user, departments=departments)
 
 
-@views.route('/departments/<string:department>')
 @login_required
+@views.route('/departments/<string:department>')
 def department_more_info(department):
     """
         Receive  department by  name  from a database, count average salary for each
@@ -92,16 +92,16 @@ def department_more_info(department):
                            user=current_user, employees=employees, aver_sal=avarege_salary)
 
 
-@views.route('/employees/<int:id>')
 @login_required
+@views.route('/employees/<int:id>')
 def employee_more_info(id):
     """Receive  employee by id from database and  render employee_more_info template """
     employee = User.query.get(id)
     return render_template("employee_more_info.html", user=current_user, employee=employee)
 
 
-@views.route('/employees/<int:id>/delete')
 @login_required
+@views.route('/employees/<int:id>/delete')
 def employee_delete(id):
 
     """
@@ -117,8 +117,8 @@ def employee_delete(id):
         return "Error occurred"
 
 
-@views.route('/employees/<int:id>/edit', methods= {'POST','GET'})
 @login_required
+@views.route('/employees/<int:id>/edit', methods= {'POST','GET'})
 def employee_edit(id):
     """
         Receive  employee by  id  from a database, edit fields of this employee,save changes in database,
@@ -139,8 +139,8 @@ def employee_edit(id):
         return render_template('employee_edit.html', user=employee)
 
 
-@views.route('/download')
 @login_required
+@views.route('/download')
 def download_file():
     p = 'D:\\Python core\\Flask_app\\info.csv'
     return send_file(p, as_attachment=True)
