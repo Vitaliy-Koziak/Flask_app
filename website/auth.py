@@ -8,7 +8,11 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods = ['GET', 'POST'])
 def login():
-    """ """
+    """
+        We receive email and password from the form,
+        we check whether there is a user with such an email,
+        if there is we verify the password.
+    """
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
@@ -35,7 +39,11 @@ def logout():
 
 @auth.route('/sign-up', methods = ['GET', 'POST'])
 def sign_up():
-    """ """
+    """
+        We receive from the form mail, name, password, date.
+        Validate this data, if everything is entered well,
+        then save the user in the database and skip to the main page.
+    """
     if request.method == 'POST':
         email = request.form.get('email')
         first_name = request.form.get('firstName')
@@ -75,5 +83,8 @@ def sign_up():
 
 
 def set_salary() -> int:
+    """
+    Randomly generate a salary for the user
+    """
     base_salary = 500
     return int(base_salary * random.uniform(0.7, 10))

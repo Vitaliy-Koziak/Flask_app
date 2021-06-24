@@ -18,7 +18,11 @@ def home():
 @login_required
 @views.route('/employees', methods = {'POST', 'GET'})
 def employees():
-
+    """
+        Receive data from the form.
+        Depending on what data we received,
+        we search for users by date and name or sort them.
+    """
     surn = request.args.get('surn')
     q = request.args.get('q')
     dat_1 = request.args.get('dat_1')
@@ -142,5 +146,8 @@ def employee_edit(id):
 @login_required
 @views.route('/download')
 def download_file():
+    """
+        Uploads a file with information about all users in csv format.
+    """
     p = 'D:\\Python core\\Flask_app\\info.csv'
     return send_file(p, as_attachment=True)
