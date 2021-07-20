@@ -1,5 +1,5 @@
 import csv
-from flask import Blueprint, render_template, redirect, request, send_file
+from flask import Blueprint, render_template, redirect, request, send_file, flash
 from flask_login import login_required, current_user
 from sqlalchemy import select
 from . import db
@@ -113,12 +113,16 @@ def employee_delete(id):
         and make redirect on employees page
     """
     employee = User.query.get_or_404(id)
-    try:
-        db.session.delete(employee)
-        db.session.commit()
-        return redirect('/employees')
-    except:
-        return "Error occurred"
+    if current_user == employee:
+        try:
+            db.session.delete(employee)
+            db.session.commit()
+            return redirect('/logout')
+        except:
+            return "Error occurred"
+    else:
+        flash("You can't do it", category = 'error')
+        return render_template('employee_more_info.html', user = current_user, employee = employee)
 
 
 @login_required
@@ -128,19 +132,28 @@ def employee_edit(id):
         Receive  employee by  id  from a database, edit fields of this employee,save changes in database,
         and make redirect on employees page
     """
-    employee = User.query.get(id)
-    if request.method == 'POST':
-        employee.first_name = request.form.get('firstName')
-        employee.date = request.form.get('date')
-        employee.salary= request.form.get('salary')
 
-        try:
-            db.session.commit()
-            return redirect('/employees')
-        except:
-            return "Some error"
+    employee = User.query.get(id)
+
+    if request.method == 'POST':
+        if current_user == employee:
+            employee.first_name = request.form.get('firstName')
+            employee.date = request.form.get('date')
+            employee.salary= request.form.get('salary')
+
+            try:
+                db.session.commit()
+                flash("Saved",category = "success")
+
+                return redirect('/employees')
+            except:
+                return "Some error"
+        else:
+            flash("You can't do it", category='error')
+            return render_template('employee_more_info.html', user=current_user, employee=employee)
+
     else:
-        return render_template('employee_edit.html', user=employee)
+        return render_template('employee_edit.html',user=current_user, employee=employee)
 
 
 @login_required

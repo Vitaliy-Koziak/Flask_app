@@ -54,13 +54,17 @@
       </button>
       <div style="position:relative;" class="collapse navbar-collapse" id="navbar">
         <img height="35px"  style=" right: 0; position: absolute;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5MenWl9q8tlXhl_3DFKcL7qIUR0-sRjMOPWxNyysvcsqITo5LL21CjNMtgU34y2bzSNc&usqp=CAU">
+
         <div  class="navbar-nav">
+
 
           {%if user.is_authenticated%}
           <a class="nav-item nav-link" id="logout" href="/logout"><b>Logout</b></a>
           <a class="nav-item nav-link" id="home" href="/"><b>Home</b></a>
           <a class="nav-item nav-link" id="employees" href="/employees"><b>Employees</b></a>
           <a class="nav-item nav-link" id="departments" href="/departments"><b>Departments</b></a>
+          <h5 class="nav-item nav-link" style="color: #00ffff">{{user.first_name}}</h5>
+
 
 
 
